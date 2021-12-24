@@ -11,10 +11,7 @@ import webbrowser
 from subprocess import call
 import shutil
 
-#rest = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/CODE/yolov5/utils/flask_rest_api'
 
-#import subprocess
-#subprocess.Popen("rest/script2.py 1", shell=True)
 
 app = Flask(__name__)
 
@@ -40,32 +37,32 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif','txt'])
 # # *************** multiple files upload *******************
 
 
-# @app.route('/uploader1')
-# def uploader1():
-#     return render_template('upload.html')
+@app.route('/uploader1')
+def uploader1():
+    return render_template('upload.html')
 
-# @app.route('/uploader1', methods = ['GET', 'POST'])
-# def upload_file1():
-#     if 'file' not in request.files:
-#         flash('No file part')
-#         return redirect(request.url)
-#     file = request.files['file']
-#     if file.filename == '':
-#         flash('No image selected for uploading')
-#         return redirect(request.url)
-#     if file and allowed_file(file.filename):
-#         filename = secure_filename(file.filename)
-#         file.save(os.path.join(app.config['UPLOAD_IMAGE_yolo_image_detect'], filename))
-#         #print('upload_image filename: ' + filename)
-#         TEST_IMAGE = UPLOAD_IMAGE + filename        
+@app.route('/uploader1', methods = ['GET', 'POST'])
+def upload_file1():
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_IMAGE_yolo_image_detect'], filename))
+        #print('upload_image filename: ' + filename)
+        TEST_IMAGE = UPLOAD_IMAGE + filename        
  
-#         DETECTION_URL = "http://192.168.0.101:5000/v1/object-detection/yolov5s"
-#         params = {'name': filename}
-#         response = requests.get(DETECTION_URL,params=params)
-#         print(response.url)        
-#         #requests.post(url = DETECTION_URL, data = data1) 
-#         #requests.post(DETECTION_URL, json={"name": image})
-#         return 'file uploaded successfully'
+        DETECTION_URL = "http://192.168.0.101:5000/v1/object-detection/yolov5s"
+        params = {'name': filename}
+        response = requests.get(DETECTION_URL,params=params)
+        print(response.url)        
+        #requests.post(url = DETECTION_URL, data = data1) 
+        #requests.post(DETECTION_URL, json={"name": image})
+        return 'file uploaded successfully'
 
 
 # @app.route('/upload-folder')
@@ -96,50 +93,50 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif','txt'])
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload')
-def home():
-    return render_template('detection.html')
+# @app.route('/upload')
+# def home():
+#     return render_template('detection.html')
  
-@app.route('/upload', methods=['POST', 'POST'])
-def upload_image():
-    if 'file' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
-    file = request.files['file']
-    if file.filename == '':
-        flash('No image selected for uploading')
-        return redirect(request.url)
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_IMAGE_yolo_image_detect'], filename))
-        #print('upload_image filename: ' + filename)
-        TEST_IMAGE = UPLOAD_IMAGE + filename
-        #print (p)
-        flash('Image successfully uploaded')
-        #******************* CALL PYTHON FOR DETECTION ********************#
-        # http://192.168.29.99:5000/
-        DETECTION_URL = "http://127.12.0.50:5000/v1/object-detection/yolov5s"
-        #DETECTION_URL = "http://192.168.29.99:5000/v1/object-detection/yolov5s"
-        params = {'name': filename}
-        response = requests.get(DETECTION_URL,params=params)
-        print(response.url) 
-        #RES_IMG = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/RESUT/' + filename
-        #TEST_IMAGE = "D:/AI_MODEL/project/oj_det_yolov5/yolov5/data/images/zidane.jpg"
-        #image_data = open(TEST_IMAGE, "rb").read()
-        #requests.post(DETECTION_URL, files={"file": filename})
-        #response = requests.post(DETECTION_URL, files={"image": image_data}).json()
-        #pprint.pprint(response)
+# @app.route('/upload', methods=['POST', 'POST'])
+# def upload_image():
+#     if 'file' not in request.files:
+#         flash('No file part')
+#         return redirect(request.url)
+#     file = request.files['file']
+#     if file.filename == '':
+#         flash('No image selected for uploading')
+#         return redirect(request.url)
+#     if file and allowed_file(file.filename):
+#         filename = secure_filename(file.filename)
+#         file.save(os.path.join(app.config['UPLOAD_IMAGE_yolo_image_detect'], filename))
+#         #print('upload_image filename: ' + filename)
+#         TEST_IMAGE = UPLOAD_IMAGE + filename
+#         #print (p)
+#         flash('Image successfully uploaded')
+#         #******************* CALL PYTHON FOR DETECTION ********************#
+#         # http://192.168.29.99:5000/
+#         DETECTION_URL = "http://127.12.0.50:5000/v1/object-detection/yolov5s"
+#         #DETECTION_URL = "http://192.168.29.99:5000/v1/object-detection/yolov5s"
+#         params = {'name': filename}
+#         response = requests.get(DETECTION_URL,params=params)
+#         print(response.url) 
+#         #RES_IMG = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/RESUT/' + filename
+#         #TEST_IMAGE = "D:/AI_MODEL/project/oj_det_yolov5/yolov5/data/images/zidane.jpg"
+#         #image_data = open(TEST_IMAGE, "rb").read()
+#         #requests.post(DETECTION_URL, files={"file": filename})
+#         #response = requests.post(DETECTION_URL, files={"image": image_data}).json()
+#         #pprint.pprint(response)
 
-        #******************* RETUTN DETECTRD RESULT ********************#
-        #return render_template('detection.html')
-        #return render_template('detection.html', filename=filename)
-        #RES_IMG = r'D:\AI_MODEL\flask\static\uploads\Screenshot_3.png'
-        RES_NAME = RES_YOLO + filename
-        return send_file(RES_NAME, mimetype='image/gif')
-        #return  "success"
-    else:
-        flash('Allowed image types are - png, jpg, jpeg, gif')
-        return redirect(request.url)
+#         #******************* RETUTN DETECTRD RESULT ********************#
+#         #return render_template('detection.html')
+#         #return render_template('detection.html', filename=filename)
+#         #RES_IMG = r'D:\AI_MODEL\flask\static\uploads\Screenshot_3.png'
+#         RES_NAME = RES_YOLO + filename
+#         return send_file(RES_NAME, mimetype='image/gif')
+#         #return  "success"
+#     else:
+#         flash('Allowed image types are - png, jpg, jpeg, gif')
+#         return redirect(request.url)
  
 @app.route('/display/<filename>')
 def display_image(filename):
@@ -149,43 +146,43 @@ def display_image(filename):
 
 
 # ***************  end  *******************
-@app.route('/drag')
-def drag():
-    return render_template('drag.html')
+# @app.route('/drag')
+# def drag():
+#     return render_template('drag.html')
 
-@app.route('/drag', methods=['POST'])
-def drag_image():
-    if 'file' not in request.files:
-        #flash('No file part')
-        return redirect(request.url)
-    file = request.files['file']
-    if file.filename == '':
-        #flash('No image selected for uploading')
-        return redirect(request.url)
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_IMAGE_yolo_image_detect'], filename))
-        #print('upload_image filename: ' + filename)
-        #TEST_IMAGE = UPLOAD_IMAGE + filename
-        #print (p)
-        #flash('Image successfully uploaded')
-        #******************* CALL PYTHON FOR DETECTION ********************#
-        # DETECTION_URL = "http://192.168.0.101:5000/v1/object-detection/yolov5s"
+# @app.route('/drag', methods=['POST'])
+# def drag_image():
+#     if 'file' not in request.files:
+#         #flash('No file part')
+#         return redirect(request.url)
+#     file = request.files['file']
+#     if file.filename == '':
+#         #flash('No image selected for uploading')
+#         return redirect(request.url)
+#     if file and allowed_file(file.filename):
+#         filename = secure_filename(file.filename)
+#         file.save(os.path.join(app.config['UPLOAD_IMAGE_yolo_image_detect'], filename))
+#         #print('upload_image filename: ' + filename)
+#         #TEST_IMAGE = UPLOAD_IMAGE + filename
+#         #print (p)
+#         #flash('Image successfully uploaded')
+#         #******************* CALL PYTHON FOR DETECTION ********************#
+#         # DETECTION_URL = "http://192.168.0.101:5000/v1/object-detection/yolov5s"
         
-        # #TEST_IMAGE = "D:/AI_MODEL/project/oj_det_yolov5/yolov5/data/images/zidane.jpg"
-        # image_data = open(TEST_IMAGE, "rb").read()
-        # response = requests.post(DETECTION_URL, files={"image": image_data}).json()
-        # #flash(response)
-        # pprint.pprint(response)
+#         # #TEST_IMAGE = "D:/AI_MODEL/project/oj_det_yolov5/yolov5/data/images/zidane.jpg"
+#         # image_data = open(TEST_IMAGE, "rb").read()
+#         # response = requests.post(DETECTION_URL, files={"image": image_data}).json()
+#         # #flash(response)
+#         # pprint.pprint(response)
 
-        #******************* RETUTN DETECTRD RESULT ********************#
+#         #******************* RETUTN DETECTRD RESULT ********************#
         
-        return render_template('drag.html')
-        #return render_template('detection.html', filename=filename)
-        #return  "success"
-    else:
-        flash('Allowed image types are - png, jpg, jpeg, gif')
-        return redirect(request.url)   
+#         return render_template('drag.html')
+#         #return render_template('detection.html', filename=filename)
+#         #return  "success"
+#     else:
+#         flash('Allowed image types are - png, jpg, jpeg, gif')
+#         return redirect(request.url)   
     
 # images = { ‘name’ : ’buildings0.jpg’,‘caption’: ‘Lisboa’}
 
@@ -247,6 +244,9 @@ def vision_obj_det_train():
 
 @app.route('/vision/object_detection/train', methods=['POST'])
 def vision_obj_det_train_folder():
+
+    OBJ_TRAIN_DATA_PATH = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/TRAIN_DATA'
+    app.config['OBJ_TRAIN_DATA_PATH'] = OBJ_TRAIN_DATA_PATH
     if request.method == 'POST':
 
         if 'files[]' not in request.files:
@@ -258,15 +258,16 @@ def vision_obj_det_train_folder():
         for file in files:
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        dst_path = "D:/AI_MODEL/Annotation_polygon/Annotation_tool/coco-annotator/datasets"
-        src_path = "D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/TRAIN_DATA"
+                file.save(os.path.join(app.config['OBJ_TRAIN_DATA_PATH'], filename))
 
-        i = 1
-        while os.path.exists(dst_path + "/res%s" % i):
-            i += 1
-        dst_name = dst_path + "/res%s" % i
-        shutil.move(src_path, dst_name)
+        # dst_path = "D:/AI_MODEL/Annotation_polygon/Annotation_tool/coco-annotator/datasets"
+        # src_path = "D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/TRAIN_DATA"
+
+        # i = 1
+        # while os.path.exists(dst_path + "/res%s" % i):
+        #     i += 1
+        # dst_name = dst_path + "/res%s" % i
+        # shutil.move(src_path, dst_name)
 
         flash('File(s) successfully uploaded')
         return redirect('/vision/object_detection/train')
@@ -274,10 +275,13 @@ def vision_obj_det_train_folder():
 
 @app.route("/vision/object_detection/detect_yolo")
 def vision_obj_det_detect():
-    return render_template('detection.html')
+    return render_template('boticx_object_detect.html')
 
 @app.route('/vision/object_detection/detect_yolo', methods = ['GET', 'POST'])
 def vision_obj_det_detect_image():
+    
+    OBJ_DETECT_DATA_PATH = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/UPLOAD'
+    app.config['OBJ_DETECT_DATA_PATH'] = OBJ_DETECT_DATA_PATH
     if 'file' not in request.files:
         flash('No file part')
         return redirect(request.url)
@@ -287,17 +291,38 @@ def vision_obj_det_detect_image():
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_IMAGE_yolo_image_detect'], filename))
+        file.save(os.path.join(app.config['OBJ_DETECT_DATA_PATH'], filename))
         #print('upload_image filename: ' + filename)
-        TEST_IMAGE = UPLOAD_IMAGE + filename        
- 
-        DETECTION_URL = "http://127.12.0.50:5000/v1/object-detection/yolov5s"
-        params = {'name': filename}
-        response = requests.get(DETECTION_URL,params=params)
-        print(response.url)        
-        #requests.post(url = DETECTION_URL, data = data1) 
-        #requests.post(DETECTION_URL, json={"name": image})
-        return 'file uploaded successfully'
+        TEST_IMAGE = UPLOAD_IMAGE + filename
+        #print (p)
+        flash('Image successfully uploaded')
+        #******************* CALL PYTHON FOR DETECTION ********************#
+        
+
+        # DETECTION_URL = "http://127.12.0.50:5000/v1/object-detection/yolov5s"
+        # #DETECTION_URL = "http://192.168.29.99:5000/v1/object-detection/yolov5s"
+        # params = {'name': filename}
+        # response = requests.get(DETECTION_URL,params=params)
+        # print(response.url) 
+
+        #RES_IMG = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/RESUT/' + filename
+        #TEST_IMAGE = "D:/AI_MODEL/project/oj_det_yolov5/yolov5/data/images/zidane.jpg"
+        #image_data = open(TEST_IMAGE, "rb").read()
+        #requests.post(DETECTION_URL, files={"file": filename})
+        #response = requests.post(DETECTION_URL, files={"image": image_data}).json()
+        #pprint.pprint(response)
+
+        #******************* RETUTN DETECTRD RESULT ********************#
+        #return render_template('detection.html')
+        #return render_template('detection.html', filename=filename)
+        #RES_IMG = r'D:\AI_MODEL\flask\static\uploads\Screenshot_3.png'
+
+        # RES_NAME = RES_YOLO + filename
+        # return send_file(RES_NAME, mimetype='image/gif')
+        return  "success YOLO"
+    else:
+        flash('Allowed image types are - png, jpg, jpeg, gif')
+        return redirect(request.url)
 
 #..................... Garuda ..........................
 
@@ -370,16 +395,21 @@ def display_solar_image(filename):
     #.......................   TRANSMISSION LINE ........................
 @app.route("/garuda/transmission")
 def garuda_transmission():
-    return render_template('select.html')
+    return render_template('garuda_line_select.html')
 
 @app.route("/garuda/transmission/train")
 def garuda_transmission_train():
-    return render_template('upload_folder.html')
+    return render_template('garduda_line_upload_folder.html')
 
 @app.route('/garuda/transmission/train', methods=['POST'])
 def garuda_transmission_train_folder():
+    
+    UPLOAD_FOLDER_line = 'D:/AI_MODEL/SITE/GARUDA/TRANSMISSION_LINE/DATA/TRAIN_DATA/'
+    app.config['UPLOAD_FOLDER_line'] = UPLOAD_FOLDER_line
+    
+    dst_garuda_annotation = 'D:/AI_MODEL/AI Platform/qwerty/coco-annotator/datasets/line/'
+    app.config['dst_garuda_annotation'] = dst_garuda_annotation
     if request.method == 'POST':
-
         if 'files[]' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -389,18 +419,26 @@ def garuda_transmission_train_folder():
         for file in files:
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
+                #file.save(os.path.join(app.config['UPLOAD_FOLDER_line'], filename))
+                file.save(os.path.join(app.config['dst_garuda_annotation'], filename))
+        # move to data annotation 
+        
+        # app.config['dst_annotation'] = dst_annotation
+        #destination = shutil.copytree(UPLOAD_FOLDER_line, dst_annotation)
         flash('File(s) successfully uploaded')
-        return redirect('/vision/object_detection/train')
+        return redirect('/garuda/transmission/train')
 
 
 @app.route("/garuda/transmission/detect_yolo")
 def garuda_transmission_detect():
-    return render_template('detection.html')
+    return render_template('garuda_line_detect.html')
 
 @app.route('/garuda/transmission/detect_yolo', methods = ['GET', 'POST'])
 def garuda_transmission_detect_image():
+
+    garuda_line_image_detect = 'D:/AI_MODEL/SITE/GARUDA/TRANSMISSION_LINE/DATA/UPLOAD'
+    app.config['garuda_line_image_detect'] = garuda_line_image_detect
+
     if 'file' not in request.files:
         flash('No file part')
         return redirect(request.url)
@@ -410,17 +448,42 @@ def garuda_transmission_detect_image():
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_IMAGE_yolo_image_detect'], filename))
+        file.save(os.path.join(app.config['garuda_line_image_detect'], filename))
         #print('upload_image filename: ' + filename)
-        TEST_IMAGE = UPLOAD_IMAGE + filename        
- 
-        # DETECTION_URL = "http://192.168.0.101:5000/v1/object-detection/yolov5s"
+        TEST_IMAGE = UPLOAD_IMAGE + filename
+        #print (p)
+        flash('Image successfully uploaded')
+        #******************* CALL PYTHON FOR DETECTION ********************#
+        # http://192.168.29.99:5000/
+        # DETECTION_URL = "http://127.12.0.50:5000/v1/object-detection/yolov5s"
+        # #DETECTION_URL = "http://192.168.29.99:5000/v1/object-detection/yolov5s"
         # params = {'name': filename}
         # response = requests.get(DETECTION_URL,params=params)
-        # print(response.url)        
-        #requests.post(url = DETECTION_URL, data = data1) 
-        #requests.post(DETECTION_URL, json={"name": image})
-        return 'file uploaded successfully'
+        # print(response.url) 
+
+        #RES_IMG = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/RESUT/' + filename
+        #TEST_IMAGE = "D:/AI_MODEL/project/oj_det_yolov5/yolov5/data/images/zidane.jpg"
+        #image_data = open(TEST_IMAGE, "rb").read()
+        #requests.post(DETECTION_URL, files={"file": filename})
+        #response = requests.post(DETECTION_URL, files={"image": image_data}).json()
+        #pprint.pprint(response)
+
+        #******************* RETUTN DETECTRD RESULT ********************#
+        #return render_template('detection.html')
+        #return render_template('detection.html', filename=filename)
+        #RES_IMG = r'D:\AI_MODEL\flask\static\uploads\Screenshot_3.png'
+
+        # RES_NAME = RES_YOLO + filename
+        # return send_file(RES_NAME, mimetype='image/gif')
+        return  "success"
+    else:
+        flash('Allowed image types are - png, jpg, jpeg, gif')
+        return redirect(request.url)
+    
+@app.route('/garuda/transmission/training')
+def line_training():
+    return "success"
+    #return redirect("http://192.168.1.21:7000/yolo_training", code=302)
 
     
 #------------ GARUDA 3RD PROJECT------------------------
@@ -609,4 +672,4 @@ def obj_train():
     
 if  __name__== '__main__':
   app.debug=True
-  #app.run('192.168.2.1', port=2000) #port can be anything higher than 5000.
+  app.run('0.0.0.0', port=7000) #port can be anything higher than 5000.
