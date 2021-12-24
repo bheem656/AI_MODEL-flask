@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 hi
+=======
+hellllllo
+>>>>>>> da5a36db78680ff3a5e17d633ad0ba0bd2914149
+
+bye

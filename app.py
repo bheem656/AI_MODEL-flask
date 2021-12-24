@@ -599,7 +599,7 @@ def label_poly():
         
 @app.route('/Annotation_tool')
 def Annotation_tool():
-    return redirect("http://localhost:5000/", code=302)
+    return redirect("http://localhost:5000/")
 
 @app.route('/vision/object_detection/training')
 def obj_train():
