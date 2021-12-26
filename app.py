@@ -22,6 +22,7 @@ UPLOAD_IMAGE_yolo_image_detect    = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_
 UPLOAD_IMAGE_solar_detect = 'D:/AI_MODEL/SITE/GARUDA/SOLAR/DATA/RESULT/'
 UPLOAD_IMAGE_solar = 'D:/AI_MODEL/SITE/GARUDA/SOLAR/DATA/UPLOAD/'
 RES_YOLO = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/RESULT/'
+RES_Trans_yolo = 'D:/AI_MODEL/SITE/GARUDA/TRANSIMISSION_LINE/DATA/RESULT/'
 # UPLOAD_IMAGE    = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/UPLOAD/'
 
 app.secret_key = "secret key"
@@ -299,11 +300,11 @@ def vision_obj_det_detect_image():
         #******************* CALL PYTHON FOR DETECTION ********************#
         
 
-        # DETECTION_URL = "http://127.12.0.50:5000/v1/object-detection/yolov5s"
-        # #DETECTION_URL = "http://192.168.29.99:5000/v1/object-detection/yolov5s"
-        # params = {'name': filename}
-        # response = requests.get(DETECTION_URL,params=params)
-        # print(response.url) 
+        DETECTION_URL = "http://127.12.0.50:5000/v1/object-detection/yolov5s"
+        #DETECTION_URL = "http://192.168.29.99:5000/v1/object-detection/yolov5s"
+        params = {'name': filename}
+        response = requests.get(DETECTION_URL,params=params)
+        print(response.url) 
 
         #RES_IMG = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/RESUT/' + filename
         #TEST_IMAGE = "D:/AI_MODEL/project/oj_det_yolov5/yolov5/data/images/zidane.jpg"
@@ -404,10 +405,10 @@ def garuda_transmission_train():
 @app.route('/garuda/transmission/train', methods=['POST'])
 def garuda_transmission_train_folder():
     
-    UPLOAD_FOLDER_line = 'D:/AI_MODEL/SITE/GARUDA/TRANSMISSION_LINE/DATA/TRAIN_DATA/'
+    UPLOAD_FOLDER_line = 'D:/AI_MODEL/Annotation_polygon/Annotation_tool/coco-annotator/datasets/Transmission_line/'
     app.config['UPLOAD_FOLDER_line'] = UPLOAD_FOLDER_line
     
-    dst_garuda_annotation = 'D:/AI_MODEL/AI Platform/qwerty/coco-annotator/datasets/line/'
+    dst_garuda_annotation = 'D:/AI_MODEL/Annotation_polygon/Annotation_tool/coco-annotator/datasets/Transmission_line/'
     app.config['dst_garuda_annotation'] = dst_garuda_annotation
     if request.method == 'POST':
         if 'files[]' not in request.files:
@@ -436,7 +437,8 @@ def garuda_transmission_detect():
 @app.route('/garuda/transmission/detect_yolo', methods = ['GET', 'POST'])
 def garuda_transmission_detect_image():
 
-    garuda_line_image_detect = 'D:/AI_MODEL/SITE/GARUDA/TRANSMISSION_LINE/DATA/UPLOAD'
+    garuda_line_image_detect = 'D:/AI_MODEL/SITE/GARUDA/TRANSIMISSION_LINE/DATA/UPLOAD'
+    
     app.config['garuda_line_image_detect'] = garuda_line_image_detect
 
     if 'file' not in request.files:
@@ -454,12 +456,12 @@ def garuda_transmission_detect_image():
         #print (p)
         flash('Image successfully uploaded')
         #******************* CALL PYTHON FOR DETECTION ********************#
-        # http://192.168.29.99:5000/
-        # DETECTION_URL = "http://127.12.0.50:5000/v1/object-detection/yolov5s"
-        # #DETECTION_URL = "http://192.168.29.99:5000/v1/object-detection/yolov5s"
-        # params = {'name': filename}
-        # response = requests.get(DETECTION_URL,params=params)
-        # print(response.url) 
+
+        DETECTION_URL = "http://127.12.0.50:5000/v1/transmission_detect/yolov5s"
+        #DETECTION_URL = "http://192.168.29.99:5000/v1/object-detection/yolov5s"
+        params = {'name': filename}
+        response = requests.get(DETECTION_URL,params=params)
+        print(response.url) 
 
         #RES_IMG = 'D:/AI_MODEL/SITE/BOTICX/VISION/YOLO/OBJECT_DETECTION/DATA/RESUT/' + filename
         #TEST_IMAGE = "D:/AI_MODEL/project/oj_det_yolov5/yolov5/data/images/zidane.jpg"
@@ -469,21 +471,21 @@ def garuda_transmission_detect_image():
         #pprint.pprint(response)
 
         #******************* RETUTN DETECTRD RESULT ********************#
-        #return render_template('detection.html')
-        #return render_template('detection.html', filename=filename)
-        #RES_IMG = r'D:\AI_MODEL\flask\static\uploads\Screenshot_3.png'
+        # return render_template('detection.html')
+        # return render_template('detection.html', filename=filename)
+        # RES_IMG = r'D:\AI_MODEL\flask\static\uploads\Screenshot_3.png'
 
-        # RES_NAME = RES_YOLO + filename
-        # return send_file(RES_NAME, mimetype='image/gif')
-        return  "success"
+        RES_NAME = RES_Trans_yolo + filename
+        return send_file(RES_NAME, mimetype='image/gif')
+        # return  "success"
     else:
         flash('Allowed image types are - png, jpg, jpeg, gif')
         return redirect(request.url)
     
 @app.route('/garuda/transmission/training')
 def line_training():
-    return "success"
-    #return redirect("http://192.168.1.21:7000/yolo_training", code=302)
+    # return "success"
+    return redirect("http://127.10.0.0:5000/", code=302)
 
     
 #------------ GARUDA 3RD PROJECT------------------------
@@ -672,4 +674,4 @@ def obj_train():
     
 if  __name__== '__main__':
   app.debug=True
-  app.run('0.0.0.0', port=7000) #port can be anything higher than 5000.
+  app.run('127.10.10.0', port=5000) #port can be anything higher than 5000.
